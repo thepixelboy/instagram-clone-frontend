@@ -98,7 +98,7 @@ function App() {
   }, []);
 
   const signIn = (event) => {
-    event.preventDefault();
+    event?.preventDefault();
 
     let formData = new FormData();
     formData.append("username", username);
@@ -138,7 +138,39 @@ function App() {
     setUsername("");
   };
 
-  const signUp = (event) => {};
+  const json_string = JSON.stringify({
+    username: username,
+    email: email,
+    password: password,
+  });
+
+  const signUp = (event) => {
+    event?.preventDefault();
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json_string,
+    };
+
+    fetch(BASE_URL + "user/", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        // console.log(data);
+        signIn();
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
+      });
+
+    setOpenSignUp(false);
+  };
 
   return (
     <div className="app">
