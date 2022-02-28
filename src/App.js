@@ -108,6 +108,13 @@ function App() {
     setOpenSignIn(false);
   };
 
+  const signOut = (event) => {
+    setAuthToken(null);
+    setAuthTokenType(null);
+    setUserId("");
+    setUsername("");
+  };
+
   return (
     <div className="app">
       <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
@@ -145,10 +152,15 @@ function App() {
           src="http://shimmeringsoul.weebly.com/uploads/1/3/0/3/13031044/1-xkmi4fb5vws6-my7b22lza_1.png"
           alt="Instagram clone"
         />
-        <div>
-          <Button onClick={() => setOpenSignIn(true)}>Login</Button>
-          <Button onClick={() => setOpenSignUp(true)}>Signup</Button>
-        </div>
+
+        {authToken ? (
+          <Button onClick={() => signOut()}>Logout</Button>
+        ) : (
+          <div>
+            <Button onClick={() => setOpenSignIn(true)}>Login</Button>
+            <Button onClick={() => setOpenSignUp(true)}>Signup</Button>
+          </div>
+        )}
       </div>
 
       <div className="app_posts">
