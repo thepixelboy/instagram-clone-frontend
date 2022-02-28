@@ -3,6 +3,7 @@ import { Button, Input, makeStyles, Modal } from "@material-ui/core";
 
 import "./App.css";
 import Post from "./Post";
+import ImageUpload from "./ImageUpload";
 
 const BASE_URL = "http://localhost:8000/";
 
@@ -260,6 +261,12 @@ function App() {
           <Post post={post} />
         ))}
       </div>
+
+      {authToken ? (
+        <ImageUpload />
+      ) : (
+        <h3>You need to login to upload a new post</h3>
+      )}
     </div>
   );
 }
