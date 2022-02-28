@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import "./ImageUpload.css";
 
-function ImageUpload() {
+const BASE_URL = "http://localhost:8000/";
+
+function ImageUpload({ authToken, authTokenType }) {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
 
@@ -12,7 +14,41 @@ function ImageUpload() {
     }
   };
 
-  const handleUpload = (e) => {};
+  const handleUpload = (e) => {
+    e?.preventDefault();
+
+    const formData = new FormData();
+    formData.append("image", image);
+
+    const requestOptions = {
+      method: "POST",
+      headers: new Headers({
+        Authorization: authTokenType + " " + authToken,
+      }),
+      body: formData,
+    };
+
+    fetch(BASE_URL + "post/image", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setImage(null);
+        // create post here
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
+      })
+      .finally(() => {
+        setImage(null);
+        setCaption("");
+        document.getElementById("fileInput").value = null;
+      });
+  };
 
   return (
     <div className="imageupload">
@@ -22,7 +58,7 @@ function ImageUpload() {
         onChange={(event) => setCaption(event.target.value)}
         value={caption}
       />
-      <input type="file" id="fileimput" onChange={handleChange} />
+      <input type="file" id="fileInput" onChange={handleChange} />
       <Button className="imageupload_button" onClick={handleUpload}>
         Upload
       </Button>
