@@ -4,7 +4,7 @@ import { Avatar, Button } from "@material-ui/core";
 
 const BASE_URL = "http://localhost:8000/";
 
-function Post({ post, authToken, authTokenType }) {
+function Post({ post, authToken, authTokenType, username }) {
   const [imageUrl, setImageUrl] = useState("");
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -43,7 +43,37 @@ function Post({ post, authToken, authTokenType }) {
       });
   };
 
-  const postComment = (event) => {};
+  const postComment = (event) => {
+    event?.preventDefault();
+
+    const json_string = JSON.stringify({
+      username: username,
+      text: newComment,
+      post_id: post.id,
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: new Headers({
+        Authorization: authTokenType + " " + authToken,
+        "Content-Type": "application/json",
+      }),
+      body: json_string,
+    };
+
+    fetch(BASE_URL + "comment", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setNewComment("");
+      });
+  };
 
   return (
     <div className="post">
