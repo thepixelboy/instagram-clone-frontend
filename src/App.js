@@ -40,6 +40,7 @@ function App() {
   const [authToken, setAuthToken] = useState(null);
   const [authTokenType, setAuthTokenType] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     setAuthToken(window.localStorage.getItem("authToken"));
@@ -137,6 +138,8 @@ function App() {
     setUsername("");
   };
 
+  const signUp = (event) => {};
+
   return (
     <div className="app">
       <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
@@ -163,6 +166,41 @@ function App() {
             />
             <Button type="submit" onClick={signIn}>
               Login
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
+      <Modal open={openSignUp} onClose={() => setOpenSignUp(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app_signin">
+            <center>
+              <img
+                className="app_headerImage"
+                src="http://shimmeringsoul.weebly.com/uploads/1/3/0/3/13031044/1-xkmi4fb5vws6-my7b22lza_1.png"
+                alt="Instagram clone"
+              />
+            </center>
+            <Input
+              placeholder="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signUp}>
+              Sign Up
             </Button>
           </form>
         </div>
