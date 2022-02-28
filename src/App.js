@@ -94,7 +94,6 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        alert(error);
       });
   }, []);
 
@@ -126,7 +125,6 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        alert(error);
       });
 
     setOpenSignIn(false);
@@ -167,7 +165,6 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        alert(error);
       });
 
     setOpenSignUp(false);
@@ -258,7 +255,11 @@ function App() {
 
       <div className="app_posts">
         {posts.map((post) => (
-          <Post post={post} />
+          <Post
+            post={post}
+            authToken={authToken}
+            authTokenType={authTokenType}
+          />
         ))}
       </div>
 

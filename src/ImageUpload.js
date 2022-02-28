@@ -40,7 +40,6 @@ function ImageUpload({ authToken, authTokenType, userId }) {
       })
       .catch((error) => {
         console.log(error);
-        alert(error);
       })
       .finally(() => {
         setImage(null);
@@ -79,7 +78,6 @@ function ImageUpload({ authToken, authTokenType, userId }) {
       })
       .catch((error) => {
         console.log(error);
-        alert(error);
       });
   };
 
